@@ -13,6 +13,7 @@ latest_posts:
 seo:
   links:
     - https://github.com/Iacob-Alexandru-Andrei
+    - https://www.linkedin.com/in/alex-iacob-898775194/
     - https://scholar.google.com/citations?user=m86W6CQAAAAJ&hl=en
 ---
 

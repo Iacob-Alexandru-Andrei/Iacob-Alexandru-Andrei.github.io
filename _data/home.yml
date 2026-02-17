@@ -19,6 +19,8 @@ hero:
       link_id: google_scholar
     - label: GitHub
       link_id: github
+    - label: LinkedIn
+      link_id: linkedin
     - label: X
       link_id: x
 
