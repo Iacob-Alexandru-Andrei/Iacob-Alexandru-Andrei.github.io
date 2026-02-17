@@ -15,7 +15,28 @@
   {% assign card_citation = bib.citation %}
 {% endif %}
 
-<article class="ri-pub-card">
+{% assign arxiv_url = "" %}
+{% if meta and meta.artifact_links %}
+  {% for link in meta.artifact_links %}
+    {% assign label_lc = link.label | downcase %}
+    {% assign url_lc = link.url | downcase %}
+    {% if label_lc contains "arxiv" or url_lc contains "arxiv.org" %}
+      {% assign arxiv_url = link.url %}
+      {% break %}
+    {% endif %}
+  {% endfor %}
+{% endif %}
+
+{% assign card_class = "ri-pub-card" %}
+{% if arxiv_url != "" %}
+  {% assign card_class = "ri-pub-card ri-pub-card--linked" %}
+{% endif %}
+
+{% if arxiv_url != "" %}
+<a class="{{ card_class }}" href="{{ arxiv_url }}" rel="noopener noreferrer">
+{% else %}
+<article class="{{ card_class }}">
+{% endif %}
   <header class="ri-pub-card-head">
     <h3>{{ card_title }}</h3>
   </header>
@@ -38,4 +59,8 @@
     <p class="ri-pub-summary">{{ meta.summary }}</p>
   {% endif %}
 
+{% if arxiv_url != "" %}
+</a>
+{% else %}
 </article>
+{% endif %}

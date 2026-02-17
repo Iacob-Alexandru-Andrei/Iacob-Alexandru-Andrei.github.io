@@ -9,6 +9,8 @@ dept-iclr-2025:
   artifact_links:
     - label: OpenReview
       url: https://openreview.net/forum?id=2wKkhOH9Jf
+    - label: arXiv
+      url: https://arxiv.org/abs/2410.05021
     - label: Flower blog post
       url: https://flower.ai/blog/2025-04-17-decoupled-embeddings-for-pretraining/
 
@@ -69,7 +71,9 @@ worldwide-federated-training-neurips-2024:
   summary: >-
     Introduces WorldLM as a hierarchical mixture-of-experts approach for
     language-model training on naturally heterogeneous data.
-  artifact_links: []
+  artifact_links:
+    - label: arXiv
+      url: https://arxiv.org/abs/2405.14446
 
 photon-mlsys-2025:
   title: "Photon: Federated LLM Pre-Training"
