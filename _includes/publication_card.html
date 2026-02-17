@@ -15,9 +15,13 @@
   {% assign card_citation = bib.citation %}
 {% endif %}
 
+{% assign primary_url = "" %}
 {% assign arxiv_url = "" %}
 {% if meta and meta.artifact_links %}
   {% for link in meta.artifact_links %}
+    {% if primary_url == "" and link.url and link.url != "" %}
+      {% assign primary_url = link.url %}
+    {% endif %}
     {% assign label_lc = link.label | downcase %}
     {% assign url_lc = link.url | downcase %}
     {% if label_lc contains "arxiv" or url_lc contains "arxiv.org" %}
@@ -26,19 +30,17 @@
     {% endif %}
   {% endfor %}
 {% endif %}
-
-{% assign card_class = "ri-pub-card" %}
 {% if arxiv_url != "" %}
-  {% assign card_class = "ri-pub-card ri-pub-card--linked" %}
+  {% assign primary_url = arxiv_url %}
 {% endif %}
 
-{% if arxiv_url != "" %}
-<a class="{{ card_class }}" href="{{ arxiv_url }}" rel="noopener noreferrer">
-{% else %}
-<article class="{{ card_class }}">
-{% endif %}
+<article class="ri-pub-card">
   <header class="ri-pub-card-head">
-    <h3>{{ card_title }}</h3>
+    {% if primary_url != "" %}
+      <h3><a class="ri-pub-title-link" href="{{ primary_url }}" rel="noopener noreferrer">{{ card_title }}</a></h3>
+    {% else %}
+      <h3>{{ card_title }}</h3>
+    {% endif %}
   </header>
 
   {% if meta.award_badge and meta.award_badge != "" %}
@@ -55,12 +57,18 @@
     <p class="ri-pub-citation">{{ card_citation }}</p>
   {% endif %}
 
+  {% if meta and meta.artifact_links and meta.artifact_links.size > 0 %}
+    <p class="ri-pub-links">
+      {% for link in meta.artifact_links %}
+        {% if link.url and link.url != "" %}
+          <a href="{{ link.url }}" rel="noopener noreferrer">{{ link.label }}</a>
+          {% unless forloop.last %}<span aria-hidden="true">·</span>{% endunless %}
+        {% endif %}
+      {% endfor %}
+    </p>
+  {% endif %}
+
   {% if meta.summary and meta.summary != "" %}
     <p class="ri-pub-summary">{{ meta.summary }}</p>
   {% endif %}
-
-{% if arxiv_url != "" %}
-</a>
-{% else %}
 </article>
-{% endif %}
